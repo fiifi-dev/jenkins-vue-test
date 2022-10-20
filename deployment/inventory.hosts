@@ -2,4 +2,4 @@
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [servers]
-flarewebs ansible_ssh_host=147.182.183.229 ansible_ssh_port=22 ansible_user=root
+flarewebs ansible_host=147.182.183.229 ansible_ssh_host=147.182.183.229 ansible_ssh_port=22 ansible_user=root
