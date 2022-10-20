@@ -21,16 +21,16 @@
         owner: "root"
         mode: "655"
 
-  #   - name: 2. Synchronize local folder to server
-  #     ansible.posix.synchronize:
-  #       src: "{{ SRC_DIR }}/dist/"
-  #       dest: "{{ APP_DIR }}/"
-  #       rsync_opts:
-  #         - "--exclude=.git"
-  #         - "--exclude=.gitignore"
-  #     register: rsync_output
-  #   - debug:
-  #       var: rsync_output
+    - name: 2. Synchronize local folder to server
+      ansible.posix.synchronize:
+        src: "{{ SRC_DIR }}/dist/"
+        dest: "{{ APP_DIR }}/"
+        rsync_opts:
+          - "--exclude=.git"
+          - "--exclude=.gitignore"
+      register: rsync_output
+    - debug:
+        var: rsync_output
 
   #   - name: 5. Create Nginx Config
   #     template:
