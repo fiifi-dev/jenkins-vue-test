@@ -19,7 +19,7 @@
         path: "{{ APP_DIR }}"
         state: directory
         owner: "root"
-        mode: u+rwx,g+rx,o+rx
+        mode: "655"
 
   #   - name: 2. Synchronize local folder to server
   #     ansible.posix.synchronize:
