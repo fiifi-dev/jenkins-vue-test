@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    APP_NAME: "test-jenkins-vue"
+    APP_NAME: "testjenkinsvue"
     SRC_DIR: "{{ lookup('env','WORKSPACE') }}"
     APP_DIR: "/home/appuser/applications/{{ APP_NAME }}"
 

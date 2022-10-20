@@ -3,6 +3,10 @@ server {
   root {{APP_DIR}};
   index   index.html index.htm;
 
+  # logging
+  access_log /var/log/nginx/{{DOMAIN}}.access.log;
+  error_log /var/log/nginx/{{DOMAIN}}.error.log warn;
+
   location / {
     root {{APP_DIR}};
     index   index.html index.htm;
