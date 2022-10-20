@@ -1,0 +1,47 @@
+---
+- hosts: flarewebs
+  become: yes
+
+  vars:
+    APP_NAME: "test-jenkins-vue"
+    SRC_DIR: "{{ lookup('env','WORKSPACE') }}"
+    APP_DIR: "/home/appuser/applications/{{ APP_NAME }}"
+
+    # Settings
+    REPLACE_CONFIG: yes
+
+    # Digital Ocean
+    DOMAIN: "test.flarewebs.com"
+
+  tasks:
+    - name: 1. Creates working directory
+      file:
+        path: "{{ APP_DIR }}"
+        state: directory
+
+    - name: 2. Synchronize local folder to server
+      ansible.posix.synchronize:
+        src: "{{ SRC_DIR }}/dist/"
+        dest: "{{ APP_DIR }}/"
+        rsync_opts:
+          - "--exclude=.git"
+          - "--exclude=.gitignore"
+      register: rsync_output
+    - debug:
+        var: rsync_output
+
+    - name: 5. Create Nginx Config
+      template:
+        src: "{{ SRC_DIR }}/deployment/nginx.conf.j2"
+        dest: "/etc/nginx/conf.d/{{ APP_NAME }}.conf"
+      register: config_output
+      notify: RestartNginx
+      when: REPLACE_CONFIG
+    - debug:
+        var: config_output
+
+  handlers:
+    - name: RestartNginx
+      service:
+        name: nginx
+        state: restarted
