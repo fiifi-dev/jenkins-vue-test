@@ -25,7 +25,7 @@
       ansible.posix.synchronize:
         src: "{{ SRC_DIR }}/dist/"
         dest: "{{ APP_DIR }}/"
-        perms: "yes"
+        perms: "no"
         rsync_opts:
           - "--exclude=.git"
           - "--exclude=.gitignore"
