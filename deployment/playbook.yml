@@ -18,7 +18,7 @@
       file:
         path: "{{ APP_DIR }}"
         state: directory
-        mode: '0755'
+        mode: u+rwx,g+rx,o+rx
 
     - name: 2. Synchronize local folder to server
       ansible.posix.synchronize:
