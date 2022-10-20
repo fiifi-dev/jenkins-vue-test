@@ -18,31 +18,32 @@
       file:
         path: "{{ APP_DIR }}"
         state: directory
+        owner: "root"
         mode: u+rwx,g+rx,o+rx
 
-    - name: 2. Synchronize local folder to server
-      ansible.posix.synchronize:
-        src: "{{ SRC_DIR }}/dist/"
-        dest: "{{ APP_DIR }}/"
-        rsync_opts:
-          - "--exclude=.git"
-          - "--exclude=.gitignore"
-      register: rsync_output
-    - debug:
-        var: rsync_output
+  #   - name: 2. Synchronize local folder to server
+  #     ansible.posix.synchronize:
+  #       src: "{{ SRC_DIR }}/dist/"
+  #       dest: "{{ APP_DIR }}/"
+  #       rsync_opts:
+  #         - "--exclude=.git"
+  #         - "--exclude=.gitignore"
+  #     register: rsync_output
+  #   - debug:
+  #       var: rsync_output
 
-    - name: 5. Create Nginx Config
-      template:
-        src: "{{ SRC_DIR }}/deployment/nginx.conf.j2"
-        dest: "/etc/nginx/conf.d/{{ APP_NAME }}.conf"
-      register: config_output
-      notify: RestartNginx
-      when: REPLACE_CONFIG
-    - debug:
-        var: config_output
+  #   - name: 5. Create Nginx Config
+  #     template:
+  #       src: "{{ SRC_DIR }}/deployment/nginx.conf.j2"
+  #       dest: "/etc/nginx/conf.d/{{ APP_NAME }}.conf"
+  #     register: config_output
+  #     notify: RestartNginx
+  #     when: REPLACE_CONFIG
+  #   - debug:
+  #       var: config_output
 
-  handlers:
-    - name: RestartNginx
-      service:
-        name: nginx
-        state: restarted
+  # handlers:
+  #   - name: RestartNginx
+  #     service:
+  #       name: nginx
+  #       state: restarted
