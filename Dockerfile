@@ -1,6 +1,6 @@
 FROM node:lts-alpine3.16 as builder
 
-COPY ../ .
+COPY . .
 
 RUN npm install
 
