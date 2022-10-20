@@ -25,6 +25,7 @@
       ansible.posix.synchronize:
         src: "{{ SRC_DIR }}/dist/"
         dest: "{{ APP_DIR }}/"
+        perms: "yes"
         rsync_opts:
           - "--exclude=.git"
           - "--exclude=.gitignore"
@@ -32,18 +33,18 @@
     - debug:
         var: rsync_output
 
-  #   - name: 5. Create Nginx Config
-  #     template:
-  #       src: "{{ SRC_DIR }}/deployment/nginx.conf.j2"
-  #       dest: "/etc/nginx/conf.d/{{ APP_NAME }}.conf"
-  #     register: config_output
-  #     notify: RestartNginx
-  #     when: REPLACE_CONFIG
-  #   - debug:
-  #       var: config_output
+    - name: 5. Create Nginx Config
+      template:
+        src: "{{ SRC_DIR }}/deployment/nginx.conf.j2"
+        dest: "/etc/nginx/conf.d/{{ APP_NAME }}.conf"
+      register: config_output
+      notify: RestartNginx
+      when: REPLACE_CONFIG
+    - debug:
+        var: config_output
 
-  # handlers:
-  #   - name: RestartNginx
-  #     service:
-  #       name: nginx
-  #       state: restarted
+  handlers:
+    - name: RestartNginx
+      service:
+        name: nginx
+        state: restarted
